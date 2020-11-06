@@ -20,25 +20,27 @@ public class MainActivity extends ListActivity {
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long d) {
-        Intent it = new Intent(getBaseContext(), MainActivity.class);
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Intent it = new Intent(getBaseContext(), Maps.class);
         String aux = l.getItemAtPosition(position).toString();
 
         switch(position) {
             case 0:
                 Toast.makeText(getBaseContext(), aux, Toast.LENGTH_SHORT).show();
-                // parametro do mapa
-                //startActivity(it);
+                it.putExtra("local", "PC");
+                startActivityForResult(it,1);
                 break;
             case 1:
                 Toast.makeText(getBaseContext(), aux, Toast.LENGTH_SHORT).show();
-                // parametro do mapa
-                //startActivity(it);
+                it.putExtra("local", "Vicosa");
+                startActivityForResult(it,2);
                 break;
             case 2:
                 Toast.makeText(getBaseContext(), aux, Toast.LENGTH_SHORT).show();
-                // parametro do mapa
-                //startActivity(it);
+                it.putExtra("local", "UFV");
+                startActivityForResult(it,3);
                 break;
             case 3:
                 finish();
