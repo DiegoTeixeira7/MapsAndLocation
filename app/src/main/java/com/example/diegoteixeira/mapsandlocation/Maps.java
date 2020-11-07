@@ -71,4 +71,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
         // .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
     }
+
+    public void onClick_Localizar(View view) {
+    }
 }
