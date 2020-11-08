@@ -24,9 +24,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.text.DecimalFormat;
 
 public class Maps extends FragmentActivity implements LocationListener, OnMapReadyCallback {
     private final LatLng VICOSA = new LatLng(-20.755921, -42.8804686);
@@ -39,6 +38,8 @@ public class Maps extends FragmentActivity implements LocationListener, OnMapRea
     public Criteria criteria;
     public String provider;
     public int TEMPO_REQUISICAO_LATLONG = 0;
+
+    public Marker marker;
 
 
     private final int LOCATION_PERMISSION = 1;
@@ -133,8 +134,6 @@ public class Maps extends FragmentActivity implements LocationListener, OnMapRea
                     lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) this);
                     lm.requestLocationUpdates(provider, TEMPO_REQUISICAO_LATLONG, 0, (android.location.LocationListener) this);
                 }
-
-                Log.i("PROVEDOR", "quebrou ");
             }
         }
     }
@@ -197,7 +196,18 @@ public class Maps extends FragmentActivity implements LocationListener, OnMapRea
     @Override
     public void onLocationChanged(Location location) {
         if(location != null) {
-            //
+
+            marker.remove();
+
+            LatLng atual = new LatLng(location.getLatitude(), location.getLongitude());
+
+            marker = map.addMarker(new MarkerOptions()
+                    .position(atual).title("Minha localização atual")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(atual, 17);
+            map.animateCamera(update);
         }
     }
 }
